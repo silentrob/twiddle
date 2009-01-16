@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<title>twiddle loves to twitter</title>
+
+<script src="app/models/person.js" type="text/javascript" charset="utf-8"></script>
+<script src="app/controllers/auth.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+x$.app( 'twiddle twitter client',  {
+	
+	// application filters
+	before: function(){
+		if(!Person.isAuthenticated()) app.index = '_login.html';
+	},
+
+	// layout and templating
+	layout:    'index.html',    
+	container: '#content',      
+	index: 	   '_twiddle.html', 
+
+	// behold the app itself!
+	controllers:[Auth, Twiddle],
+	models:[Person]
+});
+</script>
+</head>
+<body>
+	<div id="content"></div>
+</body>
+</html>
