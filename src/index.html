@@ -10,6 +10,7 @@
 <script src="assets/js/controllers/twiddle.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript">
+
 x$.app( 'twiddle twitter client',  {
 
 	// application filters
@@ -20,12 +21,13 @@ x$.app( 'twiddle twitter client',  {
 	// layout and templating
 	layout:    'index.html',    
 	container: '#content',      
-	index: 	   'twiddle/_index.html', 
+	index: 	   'twiddle/_index.html',
 
 	// behold the app itself!
 	controllers:[Auth, Twiddle],
 	models:[Person]
 });
+
 </script>
 </head>
 <body>
