@@ -33,6 +33,17 @@ x$.app = function(title, config) {
 		
 		// renders an action
 		render: function(url) {	
+			
+			// Check the controller and see if we need to fire anything for this action
+			controller_call = function(){};
+			var s = url.split('/');
+			var controller_method = s[1];
+			for (var i in app.config.controllers) {
+				if (i == s[0])
+					controller_call = app.config.controllers[i];	
+			}
+			
+			console.log(s[1]);
 	
 //			document.location.hash = u = url.split('/').pop();
 	
@@ -46,7 +57,8 @@ x$.app = function(title, config) {
 			
 			x$(app.config.container).xhr( url,{ callback:function(){
 				x$(app.config.container).html(this.responseText);
-	
+				controller_call[controller_method](app);
+		
 				x$('.nav A').click(function(e) { 
 					e.preventDefault();
 					app.render(this.href);

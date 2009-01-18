@@ -27,7 +27,8 @@ x$.app( 'twiddle twitter client',  {
 	index: 	   'twiddle/_index.html',
 
 	// behold the app itself!
-	controllers:[Auth, Twiddle],
+	// This could maybe be cleaned up, but i need the name of the controller to invoke it.
+	controllers:{'auth':Auth, 'twiddle':Twiddle},
 	models:[Person]
 });
 

@@ -1,10 +1,10 @@
 var Auth = {
 	
-	'_login.html':function(){
+	'_login.html':function(app){
 		// initialize the form to auth the person 
-		x$('form').submit(function(e){
-			Person.username = x$('#username');
-			Person.password = x$('#password');
+		x$('form').on('submit',function(e){
+			Person.username = x$('#username').first().value;	
+			Person.password = x$('#password').first().value;
 			// TODO real twitter auth..
 			// redirect them to the twiddle home
 			app.render('twiddle/_index.html')
