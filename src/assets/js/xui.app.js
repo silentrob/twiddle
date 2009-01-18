@@ -43,8 +43,6 @@ x$.app = function(title, config) {
 					controller_call = app.config.controllers[i];	
 			}
 			
-			console.log(s[1]);
-	
 //			document.location.hash = u = url.split('/').pop();
 	
 			// not sure what this chunk is doing?
@@ -55,9 +53,15 @@ x$.app = function(title, config) {
 	
 			url = "assets/html/" + url;
 			
+			// If this controller has a before action
+			if (controller_call['before'] != undefined ) controller_call['before'](app);
+			
 			x$(app.config.container).xhr( url,{ callback:function(){
 				x$(app.config.container).html(this.responseText);
+				
 				controller_call[controller_method](app);
+				
+				if (controller_call['after'] != undefined ) controller_call['after'](app);
 		
 				x$('.nav A').click(function(e) { 
 					e.preventDefault();

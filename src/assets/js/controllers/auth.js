@@ -1,5 +1,9 @@
 var Auth = {
 	
+	
+	before: function() { console.log('Before Auth')},
+	after: function() { console.log('After Auth')},
+	
 	'_login.html':function(app){
 		// initialize the form to auth the person 
 		x$('form').on('submit',function(e){

@@ -3,12 +3,15 @@
 <head>
 <title>twiddle loves to twitter</title>
 
-<script src="assets/js/models/person.js" type="text/javascript" charset="utf-8"></script>
+
 <script src="assets/js/xui.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/js/xui.app.js" type="text/javascript" charset="utf-8"></script>
 
 <script src="assets/js/controllers/auth.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/js/controllers/twiddle.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="assets/js/models/person.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/js/models/tweet.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript">
 
@@ -29,7 +32,7 @@ x$.app( 'twiddle twitter client',  {
 	// behold the app itself!
 	// This could maybe be cleaned up, but i need the name of the controller to invoke it.
 	controllers:{'auth':Auth, 'twiddle':Twiddle},
-	models:[Person]
+	models:[Person,Tweet]
 });
 
 </script>
