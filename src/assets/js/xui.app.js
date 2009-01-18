@@ -17,7 +17,7 @@ x$.app = function(title, config) {
 		}
 	};
 	
-	// teh framework
+	// the framework
 	var app = {
 		
 		// setup the defaults
