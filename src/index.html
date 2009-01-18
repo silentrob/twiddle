@@ -3,9 +3,10 @@
 <head>
 <title>twiddle loves to twitter</title>
 
+<script src="assets/js/models/person.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/js/xui.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/js/xui.app.js" type="text/javascript" charset="utf-8"></script>
-<script src="assets/js/models/person.js" type="text/javascript" charset="utf-8"></script>
+
 <script src="assets/js/controllers/auth.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/js/controllers/twiddle.js" type="text/javascript" charset="utf-8"></script>
 
@@ -15,7 +16,9 @@ x$.app( 'twiddle twitter client',  {
 
 	// application filters
 	before: function(){
-		if(!Person.isAuthenticated()) app.index = 'auth/_login.html';
+		if(!Person.isAuthenticated()) {
+		  this.index = 'auth/_login.html';
+	  }
 	},
 
 	// layout and templating
