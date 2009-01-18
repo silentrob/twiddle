@@ -3,7 +3,6 @@ var Person = {
 	password:'',
 	
  	isAuthenticated: function() {
-// //		return Person.username != '' && Person.password != '';
- 		return false;
+		return Person.username != '' && Person.password != '';
  	}
 };	

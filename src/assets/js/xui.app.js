@@ -34,21 +34,23 @@ x$.app = function(title, config) {
 		// renders an action
 		render: function(url) {	
 	
-			document.location.hash = u = url.split('/').pop();
+//			document.location.hash = u = url.split('/').pop();
 	
 			// not sure what this chunk is doing?
-			for(var action in config) {		
-				if(typeof action == 'string' && new RegExp(u).test(action))
-					config[action]();
-			};
+			// for(var action in config) {		
+			// 	if(typeof action == 'string' && new RegExp(u).test(action))
+			// 		config[action]();
+			// };
 	
+			url = "assets/html/" + url;
+			
 			x$(app.config.container).xhr( url,{ callback:function(){
 				x$(app.config.container).html(this.responseText);
 	
 				x$('.nav A').click(function(e) { 
 					e.preventDefault();
 					app.render(this.href);
-					x$('#back').click(function(){ app.render(app.history.pop() )});
+//					x$('#back').click(function(){ app.render(app.history.pop() )});
 				});
 			}});
 		}
@@ -56,10 +58,10 @@ x$.app = function(title, config) {
 	
 	// initialize the whole shebang
 	x$(window).load(function(){
-		
 		app.config.before();
 		app.history.push(app.config.index);
-		app.render( document.location.hash.replace("#",'') || app.config.index );
+//		app.render( document.location.hash.replace("#",'') || app.config.index );
+		app.render(app.config.index );		
 		app.config.after();
 	});
 };
