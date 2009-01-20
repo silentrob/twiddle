@@ -38,14 +38,16 @@ var Twiddle = {
 				// This is the tricky part, we need to put the partial into the DOM so we can select it with querySelectorAll
 				// Perhaps a fragment might work, but it dosent work with innerHTML, so I will need to re-write x$.wrap
 				// x(fragment).html(partial)
-				//console.log(options.partialMap);
+
+				console.log(partial);
+				console.log(options.partialMap);
         for (var prop in o) {
         		for (var n in o[prop]) {
-							console.log(n);							
+							
+							//console.log(o[prop][n]);							
 						}
-//						x$('#tweets').html('bottom',partial);
-//						x$(options.map[prop]).html( cb(o[prop]) ); 
-
+						x$('#tweets').html('bottom',partial);
+//					x$(options.map[prop]).html( cb(o[prop]) ); 
 				}
 				
     }
