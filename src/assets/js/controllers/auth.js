@@ -1,5 +1,4 @@
-var Auth = x$.app.controller('Auth', {
-	
+var Auth = x$.controller('auth', {
 	
 	before: function() { console.log('Before Auth')},
 	after: function() { console.log('After Auth')},
