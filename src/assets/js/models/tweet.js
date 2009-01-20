@@ -1,2 +1,2 @@
-var Tweet = {
-};	
+var Tweet = x$.model('Tweet', {
+});	
