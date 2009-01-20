@@ -1,4 +1,4 @@
-var Auth = {
+var Auth = x$.app.controller('Auth', {
 	
 	
 	before: function() { console.log('Before Auth')},
@@ -18,4 +18,4 @@ var Auth = {
 	'_account.html':function(){
 		// TODO fetch the user info for display
 	}
-};
+});
