@@ -1,5 +1,7 @@
 var Twiddle = {
 		
+	path:'assets/js/controllers/twiddle',
+	
 	// fetches recent tweets
 	'_index.html':function(){
 		
