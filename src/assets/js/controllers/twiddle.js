@@ -16,7 +16,7 @@ var Twiddle = x$.controller('twiddle', {
 				x$('#tweets').xhr(options.partial,{callback:cb2});
 			}
 			
-			
+			// xui-app-tmp
 			x$('#template').html(partial);
 			
 			// -- where we need to do dom insertion	
@@ -53,9 +53,14 @@ var Twiddle = x$.controller('twiddle', {
 			// if the json returns on obj we just insert as per the map into a single obj
 		};
 		
+		
+		
+		//----------------
+		
 		var options = {};	  	
 		options.callback = callback;
 	  	options.partial = 'assets/html/twiddle/_tweet.html';
+
 		options.partialMap = {
 			"user.profile_image_url":'.avatar',
 			"user.name":'.username',
@@ -63,6 +68,8 @@ var Twiddle = x$.controller('twiddle', {
 		};
 
 		x$('#tweets').xhr('assets/html/data.json',options);
+		
+		//-------------------
 		
 		// TODO click to tweet
 		// TODO refresh
