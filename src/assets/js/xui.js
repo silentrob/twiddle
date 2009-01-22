@@ -40,8 +40,24 @@
 * ===
 * 
 * Welcome the XUI documentation. This is generated from inline documentation in the xui javascript source.
+*
+* 
+* 
+* Basics
+* ---
+*	
+* XUI is available to the entire document as x$. It is a function, that accepts a query selector. The syntax is 
+* mostly chainable and should be familiar to anyone who has worked with jQuery.
+*
+* 	x$('a.navigation').css({ background:'blue' });
+* 
+* The query selection engine is based on the browser implementation of querySelectorAll so its fast. Real fast.
+* XUI allows for a single expression, an element or an array of elements to be passed
+* 
+* 	x$(window);
+*
+* 
 */
-
 (function() {
 	var _$ = function(els) {
 		return this.find(els);
@@ -75,7 +91,7 @@
 			return this.elements[0];
 		},
 		
-	  each: function(fn) {
+	  	each: function(fn) {
 			for( var i = 0, len = this.elements.length; i<len; ++i ) {
 				fn.call(this,this.elements[i]);
 			}
@@ -114,7 +130,7 @@
 			*
 			* 	x$(window).html( location, htmlFragment );
 			*
-			* _or_
+			* or..
 			*
 			* 	x$(window).html( htmlFragment );
 			* 
@@ -129,16 +145,20 @@
 			*  	x$('#foo').html( 'outer',  htmlFragment );
 			* 	x$('#foo').html( 'top',    htmlFragment );
 			*  	x$('#foo').html( 'bottom', htmlFragment );
+			*  	x$('#foo').html( 'remove' );	
 			* 
-			* _or_
+			* or
 			* 
 			* 	x$('#foo').html('<p>sweet as honey</p>');
 			* 
 			*/
-		    html:function(location, html) {
 			
+			
+		    html:function(location, html) {
+				
 				// private method for finding a dom element 
 				var getTag = function(el) {
+					
 					if (el.firstChild == null) {
 						switch(el.tagName) {
 							case 'UL': return 'LI'; break;
@@ -150,7 +170,6 @@
 					return el.firstChild.tagName;
 				};
 			
-			
 				// private method
 			    // Wraps the HTML in a TAG, Tag is optional
 			    // If the html starts with a Tag, it will wrap the context in that tag.
@@ -159,10 +178,12 @@
 			        var re = /^<([A-Z][A-Z0-9]*)(.*)[^>]*>(.*?)<\/\1>/i;
 			        if(re.test(xhtml)) {
 			            result = re.exec(xhtml);
+		
 			            tag = result[1];
+								
 			            // if the node has any attributes, convert to object
 			            if (result[2] != "") {
-		
+											
 							var attre = /([a-zA-Z]*\s*=\s*['|"][a-zA-Z0-9:;#\s]*['|"])/;								
 			                var attrList = result[2].split(attre);
 		
@@ -174,8 +195,9 @@
 			                    }
 			                }
 			            }
-			            html = result[3];
+			            xhtml = result[3];
 			        }
+		
 			        var element = document.createElement(tag);
 			        element.innerHTML = xhtml;
 			        for (var i in attributes) {
@@ -186,16 +208,20 @@
 		
 			        return element;
 			    };
-			
-				// allow for just the html to be pass in
-				if( html == null) {
+		
+				this.clean();
+		
+				if (arguments.length == 1 && arguments[0] != 'remove') {
 					html = location;
 					location = 'inner';
 				}	
-				
+								
 		        this.each(function(el) {
 		            switch(location) {
-		                case "inner": el.innerHTML = html; break;
+		                case "inner": 
+							// TODO refactor this
+							el.innerHTML = html; 
+							break;
 		                case "outer":
 		                    if (typeof html == 'string') html = wrap(html, getTag(el));
 		                    el.parentNode.replaceChild(html,el);
@@ -208,10 +234,34 @@
 		                    if (typeof html == 'string') html = wrap(html, getTag(el));
 		                    el.insertBefore(html,null);
 		                break;
+						case "remove": 
+							var parent = el.parentNode;
+							parent.removeChild(el);
+						break;
 		            }
 		      	});
 		        return this;
-		    }	
+		    },
+		
+		
+			
+			// This is needed el.node will return something useless without it.
+			clean:  function() {
+		  		var ns = /\S/;
+		 		this.each(function(el) {
+					var d = el, n = d.firstChild, ni = -1;
+					while(n) {
+			 	  		var nx = n.nextSibling;
+				 	    if (n.nodeType == 3 && !ns.test(n.nodeValue)) {
+				 	    	d.removeChild(n);
+				 	    } else {
+				 	    	n.nodeIndex = ++ni;
+				 	    }
+				 	    n = nx;
+				 	}
+				});
+		 	  return this;
+		 	}
 		};
 		
 		
@@ -306,12 +356,16 @@
 			*	
 			* syntax: 
 			*
-			* `x$('DIV').setStyle('width','100px');`
+			* 	x$(selector).setStyle(property, value);
 			*
 			* arguments: 
-			* - prop (JavaScript CSS Key ie: borderColor NOT border-color ), val - String
+			*
+			* - property:string the property to modify
+			* - value:string the property value to set
 			*
 			* example:
+			* 
+			* 	x$('.txt').setStyle('color', '#000');
 			* 
 			*/
 			setStyle: function(prop, val) {
@@ -326,25 +380,34 @@
 			* ### getStyle
 			*	
 			* syntax: 
-			* arguments: prop (CSS Key ie: border-color NOT borderColor)
-			* if callback is a function, it will pass the value into the function orherwise return the proprty
-			* example:
-			* TODO: prop should be JS property, not CSS property
+			*
+			* 	x$(selector).getStyle(property, callback);
+			*
+			* arguments: 
 			* 
+			* - property:string a css key (for example, border-color NOT borderColor)
+			* - callback:function (optional) a method to call on each element in the collection 
+			*
+			* example:
+			*
+			*	x$('ul#nav li.trunk').getStyle('font-size');
+			*	
+			* 	x$('a.globalnav').getStyle( 'background', function(prop){ prop == 'blue' ? 'green' : 'blue' });
+			*
 			*/
-			getStyle: function(prop,callback) {
+			getStyle: function(prop, callback) {
 				
 				var gs = function (el,p) {
 					return document.defaultView.getComputedStyle(el , "").getPropertyValue(p);
 				}
 		
-				if( callback == undefined )  
+				if(callback == undefined)  
 					return gs(this.first(),prop);
 				
-		    this.each( function(el) {
-						callback(gs(el,prop));
-		    });
-			  return this;
+		   		this.each( function(el) {
+					callback(gs(el,prop));
+		   		});
+			  	return this;
 			},
 		
 			/**
@@ -353,14 +416,16 @@
 			*	
 			* syntax:
 			*
-			* $('.foo').addClass('awesome');
+			* 	$(selector).addClass(className);
 			* 
 			* arguments:
 			*
-			* className:string the name of the CSS class to apply
+			* - className:string the name of the CSS class to apply
 			*
 			* example:
 			* 
+			* 	$('.foo').addClass('awesome');
+			*
 			*/
 			addClass: function(className) {
 				var that = this;
@@ -379,13 +444,15 @@
 			*	
 			* syntax:
 			*
-			* $('.foo').removeClass('awesome');
+			* 	x$(selector).removeClass(className);
 			* 
 			* arguments:
 			*
-			* className:string the name of the CSS class to remove
+			* - className:string the name of the CSS class to remove.
 			*
 			* example:
+			* 
+			* 	x$('.awesome').removeClass('awesome');
 			* 
 			*/
 			removeClass:function(className) {
@@ -402,15 +469,15 @@
 			*	
 			* syntax: 
 			*
-			* `x$(selector).css(object);`
+			* 	x$(selector).css(object);
 			*
 			* arguments: 
 			*
-			* - JSON object of key/value paires to set/modify style on.
+			* - an object literal of css key/value pairs to set/modify style on.
 			*
 			* example:
 			* 
-			* `x$('#box5').css({ backgroundColor:'blue', width:'100px', border:'2px solid red' });`
+			* 	x$('#box5').css({ backgroundColor:'blue', width:'100px', border:'2px solid red' });
 			*  
 			*/
 			css: function(o) {
@@ -701,15 +768,25 @@
 * 
 * - look into lib loading / extend method buggyness
 * - more tests!!!
+* - get jslint passing
 * - better docs (generate side by side code like ubiquity)
-* - doc for xui core methods
-* - doc and test xui.app
 * - inspect and generate example from markdown
 * - generators
 * - canvas progressive enhancement
+* - prop should be JS property, not CSS property
 *
 * Changelog
 * ---
+* 
+* _jab 21, 2009_
+*
+* - fixed DOM
+* - added remove
+*
+* _Jan 18, 2009_
+* 
+* - more documentation for core, etc
+* - after cat getting out of the bag on ajaxian we're working furiously to get this production ready
 *
 * _Jan 13, 2009_
 *
