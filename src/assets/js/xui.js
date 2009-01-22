@@ -219,8 +219,11 @@
 		        this.each(function(el) {
 		            switch(location) {
 		                case "inner": 
-							// TODO refactor this
-							el.innerHTML = html; 
+							if (typeof html == 'string') 
+								el.innerHTML = html; 
+							else 
+								el.innerHTML = ''; 
+								el.appendChild(html);
 							break;
 		                case "outer":
 		                    if (typeof html == 'string') html = wrap(html, getTag(el));
