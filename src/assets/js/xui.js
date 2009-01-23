@@ -219,11 +219,12 @@
 		        this.each(function(el) {
 		            switch(location) {
 		                case "inner": 
-							if (typeof html == 'string') 
+							if (typeof html == 'string') {
 								el.innerHTML = html; 
-							else 
+							} else {
 								el.innerHTML = ''; 
 								el.appendChild(html);
+							}
 							break;
 		                case "outer":
 		                    if (typeof html == 'string') html = wrap(html, getTag(el));
@@ -687,10 +688,9 @@
 		
 		    	var that   = this;
 		    	var req    = new XMLHttpRequest();
-		        var method = options.method || 'get';
-		        var async  = options.async || false ;            
+		        var method = options.method || 'GET';
+		        var async  = options.async || false ;
 		        var params = options.data || null;
-		        
 		        req.open(method,url,async);
 		        req.onload = (options.callback != null) ? options.callback : function() { that.html(this.responseText); }
 		        req.send(params);
