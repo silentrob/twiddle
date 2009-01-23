@@ -58,6 +58,7 @@ var Twiddle = x$.controller('twiddle', {
 				x$('#tweets').xhr(options.partial,{callback:cb2});
 			}	
 			*/
+
 		};
 		
 

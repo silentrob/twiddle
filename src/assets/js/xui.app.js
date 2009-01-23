@@ -8,6 +8,7 @@ x$.defaults = {
 	models:[]
 };
 
+
 x$.app = function(title, config) {
 
 	// private helper for loading configuration and defaults
@@ -41,6 +42,8 @@ x$.app = function(title, config) {
 		// renders an action
 		render: function(url) {	
 			
+			
+			
 			// Check the controller and see if we need to fire anything for this action
 			var controller_call = function(){};
 			var s = url.split('/');
@@ -51,6 +54,7 @@ x$.app = function(title, config) {
 				if (i == s[0])
 					controller_call = app.config.controllers[i];	
 			}
+			
 			
 			// document.location.hash = u = url.split('/').pop();
 			// not sure what this chunk is doing?
