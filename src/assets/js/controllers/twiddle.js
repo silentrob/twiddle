@@ -16,6 +16,8 @@ var Twiddle = x$.controller('twiddle', {
 
 	
 				var cb2 = function() {
+
+
 	       			console.log('step 2');
 					var part = this.responseText;
 					
@@ -62,6 +64,7 @@ var Twiddle = x$.controller('twiddle', {
 		};
 		
 
+
 		x$('#tweets').xhr(url,{
 			callback: function() { console.log('here'); },
 		  	partial:'assets/html/twiddle/_tweet.html',
@@ -71,10 +74,5 @@ var Twiddle = x$.controller('twiddle', {
 				"text":'.message'
 			}
 		});
-		
-		//-------------------
-		
-		// TODO click to tweet
-		// TODO refresh
 	}
 });

@@ -219,12 +219,20 @@
 		        this.each(function(el) {
 		            switch(location) {
 		                case "inner": 
+<<<<<<< HEAD:src/assets/js/xui.js
 							if (typeof html == 'string') {
 								el.innerHTML = html; 
 							} else {
 								el.innerHTML = ''; 
 								el.appendChild(html);
 							}
+=======
+							if (typeof html == 'string') 
+								el.innerHTML = html; 
+							else 
+								el.innerHTML = ''; 
+								el.appendChild(html);
+>>>>>>> 1761b9be637fad46432957573378510ad226e997:src/assets/js/xui.js
 							break;
 		                case "outer":
 		                    if (typeof html == 'string') html = wrap(html, getTag(el));
