@@ -655,7 +655,7 @@
 		* Xhr
 		* ---
 		*	
-		* Remoting methods and ultilites.  
+		* Remoting methods and ultilites. 
 		* 
 		*/
 		var Xhr = {	
@@ -697,7 +697,66 @@
 		    	
 		      	return this;
 		    },
-		
+				
+			xhrmap: function(url,opt) {
+				var that = this;
+				var options = {
+
+					callback:function(){
+						var self = that;
+						var js = eval('(' + this.responseText + ')');					
+
+						that.xhr(opt.partial,{
+							callback:function() {
+
+								var part = this.responseText;
+							
+								var createDefaultsElement = function(html) {
+									var extn = html.split('.').pop();
+									var valid = ['jpg','jpeg','png','gif'];
+									for( var i = 0; i < valid.length; i++ ) {
+										if( valid[i] == extn ) {
+											var img = new Image();
+											img.src = html;
+											return img;
+										}
+									}
+									return html;
+								}
+								
+								// xui-app-tmp
+								x$('BODY').html('top','<div id="xui-app-tmp">HERE</div>');
+								x$('#xui-app-tmp').html(part);
+
+								var len = js.length;
+								// first we loop thru the json array
+								for( var i = 0; i < len; i++ ) {
+
+									// then we loop thru our partial map
+									for (var j in opt.partialMap) {
+										var nodeKey = j;
+										var selector = opt.partialMap[j];
+										var val = jsonPath(js[i],'$.'+nodeKey)[0];
+										x$('#template ' + selector).html(createDefaultsElement(val));
+									}
+									// clone partial here....
+									var temp = x$('#'+ class +' .tweet').first();
+									var dup = temp.cloneNode(true);
+									x$("#tweets").html('bottom',dup);
+
+								}
+								
+
+							}
+						});
+					
+					}
+				 }
+
+		        this.xhr(url,options);							
+			
+				return this;
+			},
 			/**
 			* ### xhrjson 
 			*	

@@ -1,6 +1,9 @@
 var Auth = x$.controller('auth', {
 	
-	before: function() { console.log('Before Auth')},
+	before: function() { 
+		console.log('Before Auth')
+		x$('#tweets').xhr('http://localhost:5984/_all_dbs');
+		},
 	after: function() { console.log('After Auth')},
 	
 	'_login.html':function(app){

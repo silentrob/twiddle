@@ -42,8 +42,6 @@ x$.app = function(title, config) {
 		// renders an action
 		render: function(url) {	
 			
-			
-			
 			// Check the controller and see if we need to fire anything for this action
 			var controller_call = function(){};
 			var s = url.split('/');
@@ -205,6 +203,13 @@ function jsonPath(obj, expr, arg) {
 
 
 
+x$.helpers = function(){};
 
+x$.helpers.couchDB = {
+	get: 	function(){ console.log('Couch GET'); },
+	post: 	function(){ console.log('Couch POST'); },
+	put: 	function(){ console.log('Couch PUT'); },
+	delete: function(){ console.log('Couch DEL'); }
+}
 
 
