@@ -8,7 +8,6 @@ x$.defaults = {
 	models:[]
 };
 
-
 x$.app = function(title, config) {
 
 	// private helper for loading configuration and defaults
@@ -52,7 +51,6 @@ x$.app = function(title, config) {
 				if (i == s[0])
 					controller_call = app.config.controllers[i];	
 			}
-			
 			
 			// document.location.hash = u = url.split('/').pop();
 			// not sure what this chunk is doing?
